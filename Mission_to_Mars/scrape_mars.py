@@ -31,27 +31,20 @@ def scrape():
 
 
     #Define the url to visit and call the function create_soup
-    url = 'https://redplanetscience.com/'
+    url = 'https://mars.nasa.gov/news/'
     soup = create_soup(url)
 
 
-    # grab the title
-    title = soup.find('div' , class_="content_title").text
+    # grab the title and paragraph
+    title = soup.find("li", class_="slide").find('div' , class_="content_title").text
+    news_p = soup.find("li", class_="slide").find('div', class_="article_teaser_body").text
     
 
 
 
-
-    # Grab the paragraph
-    news_p = soup.find('div', class_="article_teaser_body").text
-    
-
-
-    # ### -------------------------------------------------------------------------------------------------------------------------------#####
-    # #### JPL Mars Space Images - Featured Image
+    # JPL Mars Space Images - Featured Image
     #     - Visit the url for the Featured Space Image site https://spaceimages-mars.com/
     #     - Find the image url to the full size .jpg image.
-    # ### -------------------------------------------------------------------------------------------------------------------------------#####
 
    
 
@@ -83,7 +76,7 @@ def scrape():
 
 
     # define url to visit
-    mars_facts_url = 'https://galaxyfacts-mars.com/'
+    mars_facts_url = 'https://space-facts.com/mars/'
     # using pandas read html
     tables = pd.read_html(mars_facts_url)
     # find total no. of tables in the list
@@ -95,12 +88,8 @@ def scrape():
     mars_fact_df = tables[0]
     mars_fact_df
 
-
-    # In[11]:
-
-
     # add column names ['Description' , 'Mars', 'Earth']
-    mars_fact_df.columns = ['Description' , 'Mars', 'Earth']
+    mars_fact_df.columns = ['Description' , 'Mars']
 
     # set Description as a index
     mars_fact_df.set_index('Description' , drop=True , inplace= True)
